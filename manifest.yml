@@ -1,4 +1,4 @@
-name: netlify-plugin-testrigor
+name: "@drishtant/netlify-plugin-testrigor"
 inputs:
   - name: authenticationToken
     description: 'TestRigor Authentication Token'

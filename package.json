@@ -20,16 +20,16 @@
         "cd",
         "automation"
     ],
-    "author": "Thiago Nunes",
+    "author": "Drishtant",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/thiagonunes11/tr-netlify-plugin.git"
+        "url": "git+https://github.com/0Drishtant0/netlify-testrigor.git"
     },
     "bugs": {
-        "url": "https://github.com/thiagonunes11/tr-netlify-plugin/issues"
+        "url": "https://github.com/0Drishtant0/netlify-testrigor/issues"
     },
-    "homepage": "https://github.com/thiagonunes11/tr-netlify-plugin#readme",
+    "homepage": "https://github.com/0Drishtant0/netlify-testrigor#readme",
     "dependencies": {
         "axios": "^1.6.0"
     },
