@@ -1,0 +1,38 @@
+# Test files
+tests/
+*.test.js
+*.spec.js
+
+# Development files
+.github/
+.vscode/
+.idea/
+test-real.js
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Configuration
+.eslintrc.js
+.prettierrc
+.editorconfig
+
+# CI/CD
+.travis.yml
+.gitlab-ci.yml
+azure-pipelines.yml
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Misc
+examples/
+scripts/
