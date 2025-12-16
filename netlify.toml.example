@@ -1,0 +1,119 @@
+# Example Netlify Configuration for TestRigor Plugin
+
+## Basic Configuration
+```toml
+[[plugins]]
+package = "netlify-plugin-testrigor"
+
+  [plugins.inputs]
+  authenticationToken = "${TESTRIGOR_AUTH_TOKEN}"
+  testSuiteId = "${TESTRIGOR_TEST_SUITE_ID}"
+```
+
+## Full Configuration with All Options
+```toml
+[[plugins]]
+package = "netlify-plugin-testrigor"
+
+  [plugins.inputs]
+  # Required
+  authenticationToken = "${TESTRIGOR_AUTH_TOKEN}"
+  testSuiteId = "${TESTRIGOR_TEST_SUITE_ID}"
+  
+  # Optional - Execution Control
+  waitForResults = true
+  forceCancelPreviousTesting = true
+  pollingInterval = 10
+  
+  # Optional - Test Run Configuration
+  customName = "Deploy ${COMMIT_REF}"
+  storedValues = '{"env":"production","version":"1.0.0"}'
+  
+  # Optional - Branch/Commit Testing
+  branchName = "${BRANCH}"
+  commitHash = "${COMMIT_REF}"
+  deployUrl = "${DEPLOY_PRIME_URL}"
+  allowKnownIssues = false
+  
+  # Optional - Label Filtering
+  labels = "smoke,regression"
+  excludedLabels = "experimental,slow"
+```
+
+## Context-Specific Configuration
+
+### Production Only
+```toml
+[[context.production.plugins]]
+package = "netlify-plugin-testrigor"
+
+  [context.production.plugins.inputs]
+  authenticationToken = "${TESTRIGOR_AUTH_TOKEN}"
+  testSuiteId = "${TESTRIGOR_TEST_SUITE_ID}"
+  labels = "smoke,regression,e2e"
+  waitForResults = true
+```
+
+### Deploy Previews (Async)
+```toml
+[[context.deploy-preview.plugins]]
+package = "netlify-plugin-testrigor"
+
+  [context.deploy-preview.plugins.inputs]
+  authenticationToken = "${TESTRIGOR_AUTH_TOKEN}"
+  testSuiteId = "${TESTRIGOR_TEST_SUITE_ID}"
+  labels = "smoke"
+  waitForResults = false
+```
+
+### Branch Deploys
+```toml
+[[context.branch-deploy.plugins]]
+package = "netlify-plugin-testrigor"
+
+  [context.branch-deploy.plugins.inputs]
+  authenticationToken = "${TESTRIGOR_AUTH_TOKEN}"
+  testSuiteId = "${TESTRIGOR_TEST_SUITE_ID}"
+  branchName = "${BRANCH}"
+  commitHash = "${COMMIT_REF}"
+  deployUrl = "${DEPLOY_PRIME_URL}"
+  labels = "smoke,critical"
+```
+
+## Complete netlify.toml Example
+```toml
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Default plugin configuration
+[[plugins]]
+package = "netlify-plugin-testrigor"
+
+  [plugins.inputs]
+  authenticationToken = "${TESTRIGOR_AUTH_TOKEN}"
+  testSuiteId = "${TESTRIGOR_TEST_SUITE_ID}"
+  waitForResults = false
+
+# Production: Full test suite
+[[context.production.plugins]]
+package = "netlify-plugin-testrigor"
+
+  [context.production.plugins.inputs]
+  authenticationToken = "${TESTRIGOR_AUTH_TOKEN}"
+  testSuiteId = "${TESTRIGOR_TEST_SUITE_ID}"
+  customName = "Production Deploy - ${COMMIT_REF}"
+  labels = "smoke,regression,e2e"
+  waitForResults = true
+  pollingInterval = 15
+
+# Deploy Previews: Smoke tests only, don't wait
+[[context.deploy-preview.plugins]]
+package = "netlify-plugin-testrigor"
+
+  [context.deploy-preview.plugins.inputs]
+  authenticationToken = "${TESTRIGOR_AUTH_TOKEN}"
+  testSuiteId = "${TESTRIGOR_TEST_SUITE_ID}"
+  labels = "smoke"
+  waitForResults = false
+```
